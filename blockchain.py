@@ -125,11 +125,11 @@ class Blockchain:
         }
 
     @staticmethod
-    def load(file="blockchain.json"):
+    def load(file="blockchain.json", *args, **kwargs):
         with open(file, "r") as f:
             data = json.load(f)
         if data.get("chain") == None or data.get("transaction_pool") == None: raise Exception("Invalid blockchain file")
         data["chain"] = [Block.from_json(block) for block in data["chain"]]
-        blockchain = Blockchain(data["chain"], target_time=data.get("target_time", (10, 30)), difficulty=data.get("difficulty", 1))
+        blockchain = Blockchain(data["chain"], target_time=data.get("target_time", (10, 30)), difficulty=data.get("difficulty", 1), *args, **kwargs)
         blockchain.transaction_pool = data["transaction_pool"]
         return blockchain

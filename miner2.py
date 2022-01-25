@@ -10,6 +10,7 @@ except ImportError:
     exit()
 import time
 import os
+import sys
 
 ###### Constants ######
 BASE_URL = u"http://192.168.0.176:5000/"
@@ -31,6 +32,7 @@ def is_valid_proof(proof, previous_hash, difficulty):
 def calculate_proof(previous_proof, difficulty):
     proof = 0
     while not is_valid_proof(proof, previous_proof, difficulty):
+        sys.stdout.write(u"[PROOF] {}\r".format(proof))
         proof += 1
     return proof
 
@@ -54,7 +56,7 @@ def mine():
         reward = response[u"reward"]
         end_time = time.time()
         time_delta = round(end_time - start_time, 2)
-        print "[SUCCESS] {}s, {}".format(time_delta, reward)
+        print "[SUCCESS] proof={}, time={}s, reward={}".format(proof, time_delta, reward)
         return reward
     except Exception, e:
         # If the exception is a connection error from requests:

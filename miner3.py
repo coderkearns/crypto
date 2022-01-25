@@ -25,6 +25,7 @@ def is_valid_proof(proof, previous_hash, difficulty):
 def calculate_proof(previous_proof, difficulty):
     proof = 0
     while not is_valid_proof(proof, previous_proof, difficulty):
+        print("[PROOF]", proof, end="\r")
         proof += 1
     return proof
 
@@ -48,7 +49,7 @@ def mine():
         reward = response["reward"]
         end_time = time.time()
         time_delta = round(end_time - start_time, 2)
-        print(f"[SUCCESS] {time_delta}s, {reward}")
+        print(f"[SUCCESS] proof={proof}, time={time_delta}s, reward={reward}")
         return reward
     except Exception as e:
         # If the exception is a connection error from requests:

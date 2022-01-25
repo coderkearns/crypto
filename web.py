@@ -8,7 +8,7 @@ try:
     with open("blockchain.json", "r") as f:
         app.cryptocoin = Blockchain.load("blockchain.json")
 except FileNotFoundError:
-    app.cryptocoin = Blockchain(difficulty=1, target_time=(1, 1))
+    app.cryptocoin = Blockchain(difficulty=2, target_time=(1, 1))
 
 
 def debug():
@@ -51,7 +51,7 @@ def mine():
 
     # Make sure arguments exist
     if not miner_address: return {"error": "Missing address"}, 400
-    if not proof: return {"error": "Missing proof"}, 400
+    if not proof and not proof == "0": return {"error": "Missing proof"}, 400
     try:
         proof = int(proof)
     except:
