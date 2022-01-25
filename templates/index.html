@@ -4,6 +4,13 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Cryptocoin</title>
     <style>
+        :root {
+            --background: #6b7b8c;
+            --text: #ef9d1f;
+            --primary: #3b4d61;
+            --secondary: #ef9d70;
+        }
+
         html {
             height: 100%;
             width: 100%;
@@ -16,7 +23,9 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #f1f1f1;
+            /* Colors */
+            background-color: var(--background);
+            color: var(--text);
             /* Center all children: */
             display: flex;
             justify-content: center;
@@ -32,7 +41,7 @@
 
         .center {
             width: fit-content;
-            margin: 0.25em auto;
+            margin: 0.5em auto;
         }
 
         #info-grid {
@@ -45,13 +54,15 @@
             height: fit-content;
             width: 100%;
             padding: 0.5em;
-            border: 1px solid #ccc;
+            border: 1px solid var(--primary);
+            background-color: var(--primary);
+            color: var(--secondary);
             border-radius: 5px;
+            box-shadow: 1px 1px 20px -13px rgba(255, 255, 255, 0.5);
         }
 
         #balances-table {
             /* Make this table look nice: */
-            border: 1px solid black;
             border-collapse: collapse;
             width: 100%;
             text-align: center;
@@ -60,11 +71,12 @@
         }
 
         #balances-table thead {
-            background-color: #ccc;
+            background-color: var(--primary);
+            color: var(--secondary);
         }
 
         #balances-table td, #balances-table th {
-            border: 1px solid black;
+            border: 1px solid var(--primary);
             padding: 0.5em;
         }
     </style>
