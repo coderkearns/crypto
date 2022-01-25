@@ -13,6 +13,7 @@ MINE_URL = BASE_URL + "mine"
 MINER_ADDRESS = os.environ.get("ADDRESS")
 if not MINER_ADDRESS:
     print("ERROR: Please set the ADDRESS environment variable to your blockchain address.")
+    print("ADDRESS={your address here, like 0x1234 or 0x1111, etc} python miner2.py")
     os._exit(1)
 
 ###### Proof of Work ######
