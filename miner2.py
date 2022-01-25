@@ -13,9 +13,10 @@ import os
 import sys
 
 ###### Constants ######
-BASE_URL = u"http://192.168.0.176:5000/"
-PREP_URL = BASE_URL + u"mineprep"
-MINE_URL = BASE_URL + u"mine"
+BASE_URL = os.environ.get("URL", "http://localhost:5000")
+if BASE_URL.endswith("/"): BASE_URL = BASE_URL[:-1]
+PREP_URL = BASE_URL + u"/mineprep"
+MINE_URL = BASE_URL + u"/mine"
 
 MINER_ADDRESS = os.environ.get(u"ADDRESS")
 if not MINER_ADDRESS:
