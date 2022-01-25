@@ -1,0 +1,150 @@
+
+<html>
+  <head>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cryptocoin</title>
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f1f1f1;
+            /* Center all children: */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+
+        #main {
+            min-width: 300px;
+            width: clamp(100%, 300px, 800px);
+            max-width: 100%;
+        }
+
+        .center {
+            width: fit-content;
+            margin: 0.25em auto;
+        }
+
+        #info-grid {
+            display: inline-grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 2em;
+        }
+
+        .info-block {
+            height: fit-content;
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #balances-table {
+            /* Make this table look nice: */
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+            margin: 0.5em auto;
+            border-radius: 5px;
+        }
+
+        #balances-table thead {
+            background-color: #ccc;
+        }
+
+        #balances-table td, #balances-table th {
+            border: 1px solid black;
+            padding: 0.5em;
+        }
+    </style>
+  </head>
+  <body>
+    <main>
+        <h1 id="title" class="center">Cryptocoin</h1>
+
+        <h2 class="center">Blockchain Data</h2>
+        <div id="info-grid">
+            <div class="info-block">
+                <h3>Total Coins</h3>
+                <p id="total-coins">Loading...</p>
+            </div>
+            <div class="info-block">
+                <h3>Total Transactions</h3>
+                <p id="total-blocks">Loading...</p>
+            </div>
+            <div class="info-block">
+                <h3>Total Transactions</h3>
+                <p id="total-transactions">Loading...</p>
+            </div>
+            <div class="info-block">
+                <h3>Last Proof</h3>
+                <p id="last-proof">Loading...</p>
+            </div>
+            <div class="info-block">
+                <h3>Difficulty</h3>
+                <p id="difficulty">Loading...</p>
+            </div>
+            <div class="info-block">
+                <h3>Valid</h3>
+                <p id="valid">Loading...</p>
+            </div>
+        </div>
+
+        <h2 class="center">Balances</h2>
+        <table id="balances-table" >
+            <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody id="balances-container"></tbody>
+        </table>
+    </main>
+    <script>
+        const totalCoinsEl = document.getElementById('total-coins');
+        const numberOfBlocksEl = document.getElementById('total-blocks');
+        const numberOfTransactionsEl = document.getElementById('total-transactions');
+        const lastProofEl = document.getElementById('last-proof');
+        const difficultyEl = document.getElementById('difficulty');
+        const validEl = document.getElementById('valid');
+        const balancesContainer = document.getElementById('balances-container');
+
+	    const INFO_URL = "/info.json";
+
+        function update(json) {
+            totalCoinsEl.innerHTML = json.totalCoins;
+            numberOfBlocksEl.innerHTML = json.blocks;
+            numberOfTransactionsEl.innerHTML = json.transactions;
+            lastProofEl.innerHTML = json.lastProof;
+            difficultyEl.innerHTML = json.difficulty;
+            validEl.innerHTML = json.valid ? "Chain is Valid" : "Chain is Invalid";
+
+            balancesContainer.innerHTML = "";
+            for (let [address, balance] of Object.entries(json.balances)) {
+                balancesContainer.innerHTML += `<tr><td>${address}</td><td>${balance}</td></tr>`;
+            }
+        }
+
+        function reload() {
+            fetch(INFO_URL)
+                .then(response => response.json())
+                .then(json => update(json));
+        }
+
+        reload();
+        setInterval(reload, 1000);
+	</script>
+  </body>
+</html>
