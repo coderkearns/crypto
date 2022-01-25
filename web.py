@@ -149,7 +149,7 @@ if __name__ == "__main__":
     import waitress
     from os import environ
 
-    HOST = environ.get("HOST", "localhost")
+    HOST = environ.get("HOST", "0.0.0.0")
     PORT = environ.get("PORT", "5000")
     DEBUG = True if environ.get("DEBUG", "").lower() == "true" else False
 
