@@ -152,6 +152,7 @@ if __name__ == "__main__":
     HOST = environ.get("HOST", "0.0.0.0")
     PORT = environ.get("PORT", "5000")
     DEBUG = True if environ.get("DEBUG", "").lower() == "true" else False
+    SHOULD_SAVE = True if environ.get("SAVE", "").lower() == "true" else False
 
     app.debug = DEBUG
     if DEBUG: print("DEBUG MODE ON")
@@ -162,7 +163,7 @@ if __name__ == "__main__":
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     atexit.register(lambda: sock.close())
 
-    atexit.register(lambda: app.cryptocoin.save("blockchain.json"))
+    if SHOULD_SAVE: atexit.register(lambda: app.cryptocoin.save("blockchain.json"))
 
     print(f"Listening at http://{HOST}:{PORT}/")
     waitress.serve(app, sockets=[sock])
