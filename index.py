@@ -10,7 +10,7 @@ def mine(blockchain, address):
     proof = Blockchain.Block.proof_of_work(last_proof, blockchain.difficulty)
     cryptocoin.mine_block(address, proof)
 
-cryptocoin = Blockchain(True)
+cryptocoin = Blockchain(target_time=(1, 1))
 
 carter_address = addr()
 tyson_address = addr()

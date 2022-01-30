@@ -8,7 +8,7 @@ class Blockchain:
     Block = Block
     ADDRESS = BLOCKCHAIN_ADDRESS
 
-    def __init__(self, chain=[], *args, target_time=(10, 30), difficulty=1):
+    def __init__(self, *args, chain=[], target_time=(10, 30), difficulty=1):
         self.chain = chain
         self.transaction_pool = []
         self.difficulty = difficulty
@@ -130,6 +130,6 @@ class Blockchain:
             data = json.load(f)
         if data.get("chain") == None or data.get("transaction_pool") == None: raise Exception("Invalid blockchain file")
         data["chain"] = [Block.from_json(block) for block in data["chain"]]
-        blockchain = Blockchain(data["chain"], target_time=data.get("target_time", (10, 30)), difficulty=data.get("difficulty", 1), *args, **kwargs)
+        blockchain = Blockchain(chain=data["chain"], target_time=data.get("target_time", (10, 30)), difficulty=data.get("difficulty", 1), *args, **kwargs)
         blockchain.transaction_pool = data["transaction_pool"]
         return blockchain
